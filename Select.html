@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Select - Rhythm Rush</title>
+    <meta name="description" content="Choose a track to play in Rhythm Rush.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="chart-utils.js"></script>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <h1>Select a Track</h1>
+                <p style="color: var(--text-secondary); margin: 4px 0 0 0; font-size: 0.9rem;">Choose a song to play or load a custom chart</p>
+            </div>
+            <a href="Dashboard.html" class="btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">Back to Home</a>
+            <a href="SongMaker.html" class="btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">Song Maker</a>
+        </div>
+
+        <!-- Quick Select Dropdown -->
+        <div class="quick-select-bar">
+            <label for="songDropdown">Quick Select:</label>
+            <select id="songDropdown">
+                <option value="">Loading songs...</option>
+            </select>
+            <button onclick="playDropdownSong()" class="play-btn">Play Selected</button>
+        </div>
+
+        <!-- Section Bar -->
+        <div class="section-bar">
+            <span>Available Tracks</span>
+            <label class="upload-label">
+                + Load Custom JSON Chart
+                <input type="file" id="customFileInput" accept=".json" onchange="loadCustomChart(event)" style="display: none;">
+            </label>
+        </div>
+
+        <!-- Song List -->
+        <div class="song-list" id="songListContainer">
+            <div style="text-align: center; color: var(--text-muted); padding: 30px;">Loading song files...</div>
+        </div>
+
+    </div>
+
+    <script>
+        let songDataList = [];
+
+        async function discoverSongFiles() {
+            const files = new Set();
+            const manifestRes = await fetch('songs/manifest.json', { cache: 'no-store' });
+            if (manifestRes.ok) {
+                const manifest = await manifestRes.json();
+                if (Array.isArray(manifest.songs)) {
+                    manifest.songs.forEach(fileName => files.add(fileName));
+                }
+            }
+
+            try {
+                const directoryRes = await fetch('songs/', { cache: 'no-store' });
+                if (directoryRes.ok) {
+                    const directoryHtml = await directoryRes.text();
+                    const documentFragment = new DOMParser().parseFromString(directoryHtml, 'text/html');
+                    documentFragment.querySelectorAll('a[href]').forEach(link => {
+                        const fileName = decodeURIComponent(link.getAttribute('href').split('/').pop());
+                        if (fileName.toLowerCase().endsWith('.json') && fileName !== 'manifest.json') {
+                            files.add(fileName);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.warn('Song folder listing is unavailable; using the manifest.', error);
+            }
+
+            if (files.size === 0) throw new Error('Song manifest is empty or unavailable');
+            return [...files];
+        }
+
+        async function initSongSelect() {
+            const container = document.getElementById('songListContainer');
+            const dropdown = document.getElementById('songDropdown');
+
+            try {
+                const songFiles = await discoverSongFiles();
+
+                const loadedSongs = await Promise.all(songFiles.map(async (fileName) => {
+                    try {
+                        const songRes = await fetch('songs/' + encodeURIComponent(fileName));
+                        if (!songRes.ok) return null;
+                        const data = await songRes.json();
+                        if (!data.songTitle || !Array.isArray(data.notes)) return null;
+                        return {
+                            ...data,
+                            filePath: 'songs/' + fileName,
+                            fileName: fileName
+                        };
+                    } catch (e) {
+                        return null;
+                    }
+                }));
+
+                songDataList = loadedSongs.filter(s => s !== null);
+                renderSongs();
+            } catch (err) {
+                console.error("Error loading songs:", err);
+                // A manifest is required for static hosting; these files keep older copies usable.
+                const defaultFiles = ['Chippytune.json', 'cosmic_hyperdrive.json', 'Mary had a little lamb.json', 'SomethingElse.json'];
+                const loadedSongs = await Promise.all(defaultFiles.map(async (fileName) => {
+                    try {
+                        const songRes = await fetch('songs/' + encodeURIComponent(fileName));
+                        if (!songRes.ok) return null;
+                        const data = await songRes.json();
+                        if (!data.songTitle || !Array.isArray(data.notes)) return null;
+                        return { ...data, filePath: 'songs/' + fileName, fileName: fileName };
+                    } catch (e) { return null; }
+                }));
+                songDataList = loadedSongs.filter(s => s !== null);
+
+                // Also try demo_song.json at root
+                try {
+                    const demoRes = await fetch('demo_song.json');
+                    if (demoRes.ok) {
+                        const data = await demoRes.json();
+                        songDataList.push({ ...data, filePath: 'demo_song.json', fileName: 'demo_song.json' });
+                    }
+                } catch (e) {}
+
+                renderSongs();
+            }
+        }
+
+        function renderSongs() {
+            const container = document.getElementById('songListContainer');
+            const dropdown = document.getElementById('songDropdown');
+
+            if (songDataList.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: #f87171; padding: 20px;">No songs found. Try loading a custom JSON chart.</div>`;
+                dropdown.innerHTML = `<option value="">No songs found</option>`;
+                return;
+            }
+
+            // Populate dropdown
+            dropdown.innerHTML = songDataList.map((song, i) => `
+                <option value="${i}">${escapeHtml(song.songTitle)} (${song.difficulty || 'Medium'}) - ${song.bpm || 120} BPM</option>
+            `).join('');
+
+            // Populate song cards
+            container.innerHTML = songDataList.map((song, i) => {
+                const diff = song.difficulty || 'Medium';
+                const badgeClass = `badge-${diff.toLowerCase()}`;
+                const highscore = localStorage.getItem('highscore_' + (song.id || song.songTitle)) || 0;
+                const noteCount = song.notes ? song.notes.length : 0;
+
+                return `
+                    <div class="song-item">
+                        <div>
+                            <div class="song-title">${escapeHtml(song.songTitle)}</div>
+                            <div class="song-details">
+                                <span class="badge ${badgeClass}">${diff}</span>
+                                <span>Artist: ${escapeHtml(song.artist || 'Unknown')}</span> |
+                                <span>BPM: ${song.bpm || 120}</span> |
+                                <span>Notes: ${noteCount}</span>
+                                ${highscore > 0 ? `<span style="color: var(--accent-yellow); margin-left: 8px;">Best: ${highscore}</span>` : ''}
+                            </div>
+                        </div>
+                        <div>
+                            <button class="play-btn" onclick="playSong('${encodeURIComponent(song.filePath)}')">Play</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function playSong(filePath) {
+            window.location.href = `Game.html?song=${filePath}`;
+        }
+
+        function playDropdownSong() {
+            const dropdown = document.getElementById('songDropdown');
+            const index = dropdown.value;
+            if (index !== "" && songDataList[index]) {
+                playSong(encodeURIComponent(songDataList[index].filePath));
+            }
+        }
+
+        function loadCustomChart(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const songData = JSON.parse(e.target.result);
+                    if (!songData.songTitle || !songData.notes) {
+                        alert("Invalid chart JSON. Must contain songTitle and notes array.");
+                        return;
+                    }
+                    songData.isCustom = true;
+                    songData.id = 'custom_' + Date.now();
+                    saveCustomChart(songData).then(() => {
+                        window.location.href = 'Game.html?custom=true';
+                    }).catch(() => {
+                        try {
+                            sessionStorage.setItem('custom_chart', JSON.stringify(songData));
+                            window.location.href = 'Game.html?custom=true';
+                        } catch (storageError) {
+                            alert("This chart is too large for browser storage. Download it and open it from a local web server.");
+                        }
+                    });
+                } catch (err) {
+                    alert("Error reading file: " + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, function (m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        initSongSelect();
+    </script>
+</body>
+</html>

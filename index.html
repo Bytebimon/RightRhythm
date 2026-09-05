@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Rush</title>
+    <meta name="description"
+        content="Rhythm Rush — a rhythm game. Hit notes in sync with the beat, build combos, and get high scores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="hero">
+            <span class="hero-badge">RHYTHM ARCADE</span>
+            <h1>RHYTHM RUSH</h1>
+            <p>Hit the notes in sync with the beat. Master tracks, build combos, and get the highest score.</p>
+
+            <div class="cta-group">
+                <a href="Select.html" class="btn-primary" id="ctaPlay">
+                    Choose Track
+                </a>
+
+                <a href="Verify.html" class="btn-secondary" id="ctaDashboard">
+                    Login
+                </a>
+
+                <a href="Game.html?song=demo_song.json" class="btn-secondary" id="ctaQuick">
+                    Quick Start
+                </a>
+            </div>
+        </div>
+
+        <div class="grid-section">
+
+            <!-- How to Play Card -->
+            <div class="info-card" id="cardControls">
+                <h3>How to Play</h3>
+                <p>Notes fall down four columns. Tap the matching key when the note reaches the target line at the
+                    bottom.</p>
+
+                <div class="keys-display">
+                    <div class="key-cap key-d">D</div>
+                    <div class="key-cap key-f">F</div>
+                    <div class="key-cap key-j">J</div>
+                    <div class="key-cap key-k">K</div>
+                </div>
+            </div>
+
+            <!-- Scoring Card -->
+            <div class="info-card" id="cardScoring">
+                <h3>Accuracy and Scoring</h3>
+                <p>Timing your hits accurately awards points and builds your combo.</p>
+                <div class="track-list">
+                    <div class="mini-track-item">
+                        <span>PERFECT (&lt; 40ms)</span>
+                        <span style="color: #34d399; font-weight: 600;">+100 PTS</span>
+                    </div>
+                    <div class="mini-track-item">
+                        <span>GOOD (&lt; 100ms)</span>
+                        <span style="color: #60a5fa; font-weight: 600;">+50 PTS</span>
+                    </div>
+                    <div class="mini-track-item">
+                        <span>MISS (&gt; 100ms)</span>
+                        <span style="color: #f87171; font-weight: 600;">Combo Reset</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Tracks Card -->
+            <div class="info-card" id="cardTracks">
+                <h3>Featured Tracks</h3>
+                <p>Select from available tracks:</p>
+                <div class="track-list" id="featuredTracks">
+                    <a href="Game.html?song=songs/cosmic_hyperdrive.json" class="mini-track-item">
+                        <div>
+                            <div class="mini-track-info">Cosmic Hyperdrive</div>
+                            <div class="mini-track-meta">Expert &bull; 170 BPM</div>
+                        </div>
+                        <span class="play-icon">Play</span>
+                    </a>
+                    <a href="Game.html?song=demo_song.json" class="mini-track-item">
+                        <div>
+                            <div class="mini-track-info">Synthwave Arcade Demo</div>
+                            <div class="mini-track-meta">Medium &bull; 120 BPM</div>
+                        </div>
+                        <span class="play-icon">Play</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>Rhythm Rush &bull; HTML5 Canvas and Web Audio API Partialy Vibe coded</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

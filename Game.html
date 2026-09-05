@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Rush - Game</title>
+    <meta name="description" content="Play Rhythm Rush — hit falling notes in sync with the beat.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-wrapper">
+
+        <!-- Header Nav & Song Info -->
+        <div class="game-header">
+            <div class="nav-group">
+                <a href="Dashboard.html" class="nav-link">Home</a>
+                <span class="divider">&bull;</span>
+                <a href="Select.html" class="nav-link accent">Song Select</a>
+            </div>
+            <div class="song-info">
+                <div id="songTitleText" class="song-title">Loading Track...</div>
+                <div id="songArtistText" class="song-artist"></div>
+            </div>
+            <div class="high-score-badge">
+                Best: <span id="highScoreText">0</span>
+            </div>
+        </div>
+
+        <!-- Score / Combo / Rating Dashboard -->
+        <div class="score-board">
+            <div class="score-item">
+                <span class="label">SCORE</span>
+                <span id="scoreText" class="value">0</span>
+            </div>
+            <div class="score-item">
+                <span class="label">COMBO</span>
+                <span id="comboText" class="value">0x</span>
+            </div>
+            <div class="score-item">
+                <span class="label">RATING</span>
+                <span id="ratingText" class="value" style="color: var(--accent-blue);">READY</span>
+            </div>
+        </div>
+
+        <!-- Rhythm Canvas -->
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="500" height="600"></canvas>
+        </div>
+
+        <!-- Actions -->
+        <div class="controls-action">
+            <button id="btn" onclick="startGame()">Start Track</button>
+            <a href="Select.html" class="btn-secondary" style="font-size: 0.9rem; padding: 12px 18px;">Tracks</a>
+        </div>
+
+    </div>
+
+    <!-- Results Overlay -->
+    <div class="results-overlay" id="resultsOverlay">
+        <div class="results-card">
+            <h2>Track Complete</h2>
+            <div class="result-grade" id="resultGrade">S</div>
+            <div class="results-stats">
+                <div class="stat-box">
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value score-val" id="resultScore">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Max Combo</div>
+                    <div class="stat-value combo-val" id="resultMaxCombo">0x</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Perfects</div>
+                    <div class="stat-value perfects" id="resultPerfects">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Goods</div>
+                    <div class="stat-value goods" id="resultGoods">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Misses</div>
+                    <div class="stat-value misses" id="resultMisses">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Accuracy</div>
+                    <div class="stat-value accuracy" id="resultAccuracy">0%</div>
+                </div>
+            </div>
+            <div class="results-actions">
+                <button class="btn-primary" onclick="document.getElementById('resultsOverlay').classList.remove('visible'); startGame();">Play Again</button>
+                <a href="Select.html" class="btn-secondary">Tracks</a>
+
+                <a href="Dashboard.html" class="btn-secondary">Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="DataBase.js"></script>
+    <script src="chart-utils.js"></script>
+    <script src="sketch.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            initGame();
+        });
+    </script>
+</body>
+</html>
