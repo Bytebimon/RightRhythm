@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Rush</title>
+    <meta name="description"
+        content="Rhythm Rush — a rhythm game. Hit notes in sync with the beat, build combos, and get high scores.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="hero">
+            <span class="hero-badge">RHYTHM ARCADE</span>
+            <h1>RHYTHM RUSH</h1>
+            <p>Hit the notes in sync with the beat. Master tracks, build combos, and get the highest score.</p>
+
+            <div class="cta-group">
+                <a href="Select.html" class="btn-primary" id="ctaPlay">
+                    Choose Track
+                </a>
+                <a href="Game.html?song=demo_song.json" class="btn-secondary" id="ctaQuick">
+                    Quick Start
+                </a>
+            </div>
+        </div>
+
+        <div class="grid-section">
+
+            <div class="info-card">
+                <h3>Database Leaderboard</h3>
+                <ol id="databaseLeaderboard" class="leaderboard-list"></ol>
+            </div>
+
+            <!-- How to Play Card -->
+            <div class="info-card" id="cardControls">
+                <h3>Popular Songs:</h3>
+                <div class="track-list">
+                    <a href="Game.html?song=songs/cosmic_hyperdrive.json" class="mini-track-item">
+                        <div>
+                            <div class="mini-track-info">Cosmic Hyperdrive</div>
+                            <div class="mini-track-meta">Expert &bull; 170 BPM</div>
+                        </div>
+                        <span class="play-icon">Play</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-card" id="cardScoring">
+                <h3>Recent Tracks</h3>
+                <div class="track-list"></div>
+            </div>
+
+            <a href="OnlineGame.html" class="btn-primary" id="ctaQuick">
+                Play online
+            </a>
+
+        </div>
+
+        <footer>
+            <p>Rhythm Rush &bull; HTML5 Canvas and Web Audio API</p>
+        </footer>
+
+    </div>
+
+    <script src="DataBase.js"></script>
+    <script>
+        async function renderDashboardLeaderboard() {
+            try {
+                await RhythmDB.refreshFromRemote();
+            } catch (error) {
+                console.warn("Using local leaderboard data.", error);
+            }
+
+            const leaderboard = RhythmDB.getLeaderboard();
+            document.getElementById("databaseLeaderboard").innerHTML = leaderboard.length
+                ? leaderboard.map((entry, index) => `<li><span>${index + 1}. ${entry.username}</span><strong>${entry.score.toLocaleString()}</strong></li>`).join("")
+                : '<li class="leaderboard-empty">Finish a game to appear here.</li>';
+        }
+
+        if (RhythmDB.getCurrentUser() === "Guest") {
+            window.location.replace("Verify.html");
+        } else {
+            renderDashboardLeaderboard();
+        }
+    </script>
+
+</body>
+
+</html>
