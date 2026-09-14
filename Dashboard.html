@@ -35,7 +35,7 @@
 
             <div class="info-card">
                 <h3>Database Leaderboard</h3>
-                <ol id="databaseLeaderboard" class="leaderboard-list"></ol>
+                <ol id="databaseLeaderboard" class="leaderboard-list" ></ol>
             </div>
 
             <!-- How to Play Card -->
@@ -81,7 +81,7 @@
 
             const leaderboard = RhythmDB.getLeaderboard();
             document.getElementById("databaseLeaderboard").innerHTML = leaderboard.length
-                ? leaderboard.map((entry, index) => `<li><span>${index + 1}. ${entry.username}</span><strong>${entry.score.toLocaleString()}</strong></li>`).join("")
+                ? leaderboard.slice(0, 3).map((entry, index) => `<li><span>${index + 1}. ${entry.username}</span><strong>${entry.score.toLocaleString()}</strong></li>`).join("")
                 : '<li class="leaderboard-empty">Finish a game to appear here.</li>';
         }
 
