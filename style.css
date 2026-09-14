@@ -1,26 +1,29 @@
 /* ═══════════════════════════════════════════════════════
-   RHYTHM RUSH — Clean Dark Theme (Flat & Simple)
+   RHYTHM RUSH — Back Alley Theme (Graffiti / Street Art)
    ═══════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Outfit:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg: #121212;
-    --bg-card: #1e1e1e;
-    --bg-card-hover: #262626;
-    --border: #333333;
-    --border-hover: #444444;
-    --text: #f3f4f6;
-    --text-secondary: #9ca3af;
-    --text-muted: #6b7280;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --accent-blue: #3b82f6;
-    --accent-green: #10b981;
-    --accent-yellow: #f59e0b;
-    --accent-red: #ef4444;
-    --accent-pink: #ec4899;
-    --radius: 8px;
+    --bg: #19140f;
+    --bg-card: #221b14;
+    --bg-card-hover: #2b2118;
+    --border: #0a0a0a;
+    --border-hover: #000000;
+    --text: #f6f0e2;
+    --text-secondary: #cdbfa2;
+    --text-muted: #8f8267;
+    --primary: #ff2e9a;
+    --primary-hover: #d61f80;
+    --accent-blue: #1ec8ff;
+    --accent-green: #a6ff1f;
+    --accent-yellow: #f7e614;
+    --accent-red: #ff3b3b;
+    --accent-pink: #ff2e9a;
+    --radius: 14px;
+    --tag-font: 'Permanent Marker', 'Outfit', cursive;
+    --pop: 4px 4px 0 var(--border);
+    --pop-sm: 3px 3px 0 var(--border);
 }
 
 *, *::before, *::after {
@@ -31,6 +34,13 @@
 
 body {
     background-color: var(--bg);
+    background-image:
+        radial-gradient(circle at 6% 10%, rgba(255, 46, 154, 0.14) 0 110px, transparent 111px),
+        radial-gradient(circle at 92% 6%, rgba(30, 200, 255, 0.14) 0 130px, transparent 131px),
+        radial-gradient(circle at 90% 82%, rgba(247, 230, 20, 0.12) 0 120px, transparent 121px),
+        radial-gradient(circle at 8% 88%, rgba(166, 255, 31, 0.12) 0 120px, transparent 121px);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: var(--text);
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
@@ -64,13 +74,18 @@ a:hover {
     padding: 36px 30px;
     text-align: center;
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--pop);
 }
 
 .auth-card h1 {
     margin: 14px 0 10px;
     font-size: 2rem;
+    font-family: var(--tag-font);
+    color: var(--accent-yellow);
+    text-shadow: 2px 2px 0 var(--border);
+    letter-spacing: 1px;
 }
 
 .auth-card > p {
@@ -97,9 +112,14 @@ a:hover {
     padding: 11px 12px;
     color: var(--text);
     background: #262626;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     font: inherit;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--accent-pink);
 }
 
 .auth-actions {
@@ -120,22 +140,30 @@ a:hover {
 
 .hero-badge {
     display: inline-block;
-    padding: 4px 12px;
-    background: #262626;
-    border: 1px solid var(--border);
+    padding: 5px 14px;
+    background: var(--accent-yellow);
+    border: 3px solid var(--border);
     border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1px;
-    color: var(--accent-yellow);
+    color: #1a1305;
     margin-bottom: 16px;
+    transform: rotate(-3deg);
+    box-shadow: var(--pop-sm);
 }
 
 .hero h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -1px;
+    display: inline-block;
+    font-family: var(--tag-font);
+    font-size: 3.1rem;
+    font-weight: 400;
+    color: var(--accent-pink);
+    text-shadow:
+        3px 3px 0 var(--border),
+        -6px 4px 0 rgba(30, 200, 255, 0.35);
+    letter-spacing: 1px;
+    transform: rotate(-1.5deg);
     margin-bottom: 12px;
 }
 
@@ -160,19 +188,26 @@ a:hover {
     justify-content: center;
     padding: 12px 24px;
     background: var(--primary);
-    color: #ffffff;
-    font-weight: 600;
+    color: #1a1305;
+    font-family: var(--tag-font);
+    font-weight: 400;
     font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     border-radius: var(--radius);
-    border: none;
+    border: 3px solid var(--border);
+    box-shadow: var(--pop-sm);
     cursor: pointer;
     text-decoration: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .btn-primary:hover {
     background: var(--primary-hover);
-    color: #ffffff;
+    color: #1a1305;
     text-decoration: none;
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border);
 }
 
 .btn-secondary {
@@ -180,20 +215,27 @@ a:hover {
     align-items: center;
     justify-content: center;
     padding: 12px 20px;
-    background: #262626;
-    color: var(--text);
-    font-weight: 600;
+    background: var(--accent-yellow);
+    color: #1a1305;
+    font-family: var(--tag-font);
+    font-weight: 400;
     font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
+    box-shadow: var(--pop-sm);
     cursor: pointer;
     text-decoration: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .btn-secondary:hover {
-    background: #303030;
-    color: #ffffff;
+    background: #fff04d;
+    color: #1a1305;
     text-decoration: none;
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border);
 }
 
 /* ── Grid Section ── */
@@ -206,16 +248,22 @@ a:hover {
 
 .info-card {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     padding: 22px;
+    box-shadow: var(--pop);
 }
 
+.info-card:nth-of-type(odd) { transform: rotate(-0.6deg); }
+.info-card:nth-of-type(even) { transform: rotate(0.6deg); }
+
 .info-card h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-family: var(--tag-font);
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
-    color: var(--text);
+    color: var(--accent-blue);
 }
 
 .info-card p {
@@ -226,6 +274,7 @@ a:hover {
 
 .account-card {
     grid-column: 1 / -1;
+    transform: none !important;
 }
 
 .account-form {
@@ -248,9 +297,14 @@ a:hover {
     padding: 10px 12px;
     color: var(--text);
     background: #262626;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     font: inherit;
+}
+
+.account-form input:focus {
+    outline: none;
+    border-color: var(--accent-green);
 }
 
 .account-actions {
@@ -271,8 +325,9 @@ a:hover {
     gap: 18px;
     padding: 22px;
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--pop);
 }
 
 .song-maker-fields {
@@ -295,7 +350,7 @@ a:hover {
     padding: 10px 12px;
     color: var(--text);
     background: #262626;
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: 4px;
     font: inherit;
 }
@@ -319,16 +374,22 @@ a:hover {
 
 .maker-lane {
     min-height: 58px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    border: 3px solid var(--border);
+    border-radius: 6px;
     background: #262626;
-    font: inherit;
+    font-family: var(--tag-font);
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 400;
     cursor: pointer;
+    box-shadow: var(--pop-sm);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.maker-lane:hover { background: #303030; }
+.maker-lane:hover {
+    background: #303030;
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border);
+}
 
 .maker-actions {
     display: flex;
@@ -358,7 +419,7 @@ a:hover {
     padding: 4px 8px;
     color: var(--text-secondary);
     background: transparent;
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: 4px;
     cursor: pointer;
 }
@@ -384,17 +445,19 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: var(--tag-font);
+    font-weight: 400;
+    font-size: 1rem;
+    border: 3px solid var(--border);
     background: #262626;
+    box-shadow: var(--pop-sm);
 }
 
-.key-d { color: var(--accent-pink); }
-.key-f { color: var(--accent-blue); }
-.key-j { color: var(--accent-green); }
-.key-k { color: var(--accent-yellow); }
+.key-d { color: var(--accent-pink); transform: rotate(-4deg); }
+.key-f { color: var(--accent-blue); transform: rotate(3deg); }
+.key-j { color: var(--accent-green); transform: rotate(-3deg); }
+.key-k { color: var(--accent-yellow); transform: rotate(4deg); }
 
 /* Track list */
 .track-list {
@@ -414,7 +477,7 @@ a:hover {
     font-size: 0.85rem;
     color: var(--text-secondary);
     text-decoration: none;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
 }
 
 .mini-track-item:hover {
@@ -424,7 +487,8 @@ a:hover {
 }
 
 .mini-track-info {
-    font-weight: 600;
+    font-family: var(--tag-font);
+    font-weight: 400;
     color: var(--text);
 }
 
@@ -452,19 +516,23 @@ a:hover {
 }
 
 .header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-family: var(--tag-font);
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--accent-yellow);
+    text-shadow: 2px 2px 0 var(--border);
 }
 
 .quick-select-bar {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     padding: 14px 16px;
     display: flex;
     gap: 12px;
     align-items: center;
     margin-bottom: 16px;
+    box-shadow: var(--pop-sm);
 }
 
 .quick-select-bar label {
@@ -480,7 +548,7 @@ a:hover {
     border-radius: 4px;
     background: #262626;
     color: var(--text);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     font-family: inherit;
     font-size: 0.9rem;
     outline: none;
@@ -506,7 +574,7 @@ a:hover {
     cursor: pointer;
     font-size: 0.85rem;
     font-weight: 500;
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
 }
 
 .upload-label:hover {
@@ -523,23 +591,27 @@ a:hover {
 
 .song-item {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     padding: 16px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: var(--pop-sm);
 }
 
 .song-item:hover {
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border);
 }
 
 .song-title {
+    font-family: var(--tag-font);
     font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text);
+    font-weight: 400;
+    color: var(--accent-blue);
     margin-bottom: 4px;
 }
 
@@ -554,32 +626,40 @@ a:hover {
 
 .badge {
     display: inline-block;
-    padding: 2px 8px;
+    padding: 2px 9px;
+    border: 2px solid var(--border);
     border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
+    transform: rotate(-2deg);
 }
 
-.badge-easy   { background: #134e48; color: #34d399; }
-.badge-medium { background: #78350f; color: #fbbf24; }
-.badge-hard   { background: #1e3a8a; color: #60a5fa; }
-.badge-expert { background: #7f1d1d; color: #f87171; }
+.badge-easy   { background: var(--accent-green);  color: #10230a; }
+.badge-medium { background: var(--accent-yellow); color: #1a1305; }
+.badge-hard   { background: var(--accent-blue);   color: #04202b; }
+.badge-expert { background: var(--accent-pink);   color: #2a0a1b; }
 
 .play-btn {
     background: var(--primary);
-    color: #ffffff;
-    border: none;
+    color: #1a1305;
+    border: 2px solid var(--border);
     padding: 8px 18px;
+    font-family: var(--tag-font);
     font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 4px;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-radius: 6px;
+    box-shadow: var(--pop-sm);
     cursor: pointer;
     white-space: nowrap;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .play-btn:hover {
     background: var(--primary-hover);
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border);
 }
 
 /* ── Game Page ── */
@@ -609,8 +689,17 @@ a:hover {
     padding: 32px 20px;
     text-align: center;
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--pop);
+}
+
+.online-lobby h1,
+.online-lobby h2 {
+    font-family: var(--tag-font);
+    font-weight: 400;
+    color: var(--accent-yellow);
+    text-shadow: 2px 2px 0 var(--border);
 }
 
 .online-lobby h1,
@@ -635,7 +724,7 @@ a:hover {
     padding: 12px;
     color: var(--text);
     background: #262626;
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     font: inherit;
     text-align: center;
@@ -643,10 +732,13 @@ a:hover {
 
 .room-code {
     display: block;
+    font-family: var(--tag-font);
     color: var(--accent-yellow);
+    text-shadow: 3px 3px 0 var(--border);
     font-size: 2.5rem;
     letter-spacing: 6px;
     margin: 12px 0 20px;
+    transform: rotate(-1deg);
 }
 
 .leaderboard-list {
@@ -662,11 +754,14 @@ a:hover {
     justify-content: space-between;
     padding: 9px 12px;
     background: #262626;
+    border: 2px solid var(--border);
     border-radius: 4px;
     color: var(--text-secondary);
 }
 
 .leaderboard-list strong {
+    font-family: var(--tag-font);
+    font-weight: 400;
     color: var(--accent-yellow);
 }
 
@@ -679,8 +774,9 @@ a:hover {
     width: 100%;
     padding: 12px;
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--pop-sm);
 }
 
 .live-leaderboard-header {
@@ -750,7 +846,8 @@ a:hover {
     background: var(--bg-card);
     padding: 10px 16px;
     border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
+    box-shadow: var(--pop-sm);
 }
 
 .nav-group {
@@ -804,13 +901,16 @@ a:hover {
 }
 
 .high-score-badge {
+    font-family: var(--tag-font);
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--accent-yellow);
     background: #262626;
     padding: 4px 10px;
     border-radius: 4px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
+    transform: rotate(-2deg);
+    display: inline-block;
 }
 
 /* Score Board */
@@ -821,7 +921,8 @@ a:hover {
     background: var(--bg-card);
     padding: 12px 10px;
     border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
+    box-shadow: var(--pop-sm);
 }
 
 .score-item {
@@ -841,8 +942,9 @@ a:hover {
 }
 
 .score-item .value {
+    font-family: var(--tag-font);
     font-size: 1.3rem;
-    font-weight: 700;
+    font-weight: 400;
     min-width: 6ch;
     text-align: center;
     font-variant-numeric: tabular-nums;
@@ -854,7 +956,9 @@ a:hover {
 }
 
 #comboText {
+    font-family: var(--tag-font);
     color: var(--accent-yellow);
+    text-shadow: 2px 2px 0 var(--border);
 }
 
 /* Canvas */
@@ -865,7 +969,8 @@ a:hover {
 canvas#gameCanvas {
     background: #181818;
     border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
+    box-shadow: var(--pop);
     display: block;
     width: 500px;
     height: 600px;
@@ -885,17 +990,23 @@ canvas#gameCanvas {
     justify-content: center;
     padding: 12px 20px;
     font-size: 0.95rem;
-    font-weight: 600;
-    font-family: inherit;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: var(--tag-font);
     background: var(--primary);
-    color: #ffffff;
-    border: none;
+    color: #1a1305;
+    border: 3px solid var(--border);
     border-radius: var(--radius);
+    box-shadow: var(--pop-sm);
     cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 #btn:hover {
     background: var(--primary-hover);
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border);
 }
 
 /* ── Results Overlay ── */
@@ -918,11 +1029,13 @@ canvas#gameCanvas {
 
 .results-card {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     padding: 32px;
     text-align: center;
     min-width: 320px;
+    box-shadow: var(--pop);
+    transform: rotate(-0.6deg);
 }
 
 .results-card h2 {
@@ -935,10 +1048,12 @@ canvas#gameCanvas {
 }
 
 .result-grade {
-    font-size: 3.5rem;
-    font-weight: 800;
+    font-family: var(--tag-font);
+    font-size: 3.8rem;
+    font-weight: 400;
     line-height: 1;
     margin-bottom: 20px;
+    text-shadow: 3px 3px 0 var(--border);
 }
 
 .results-stats {
@@ -950,7 +1065,7 @@ canvas#gameCanvas {
 
 .stat-box {
     background: #262626;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 4px;
     padding: 10px;
 }
@@ -965,8 +1080,9 @@ canvas#gameCanvas {
 }
 
 .stat-box .stat-value {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-family: var(--tag-font);
+    font-size: 1.25rem;
+    font-weight: 400;
 }
 
 .stat-box .stat-value.perfects  { color: var(--accent-green); }
@@ -1003,18 +1119,22 @@ footer p {
 /* ── Multiplayer Styles ── */
 .lobby-box {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     padding: 24px;
     width: 100%;
     max-width: 500px;
     text-align: center;
     margin-bottom: 20px;
+    box-shadow: var(--pop);
 }
 
 .lobby-box h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-family: var(--tag-font);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--accent-green);
+    text-shadow: 2px 2px 0 var(--border);
     margin-bottom: 12px;
 }
 
@@ -1042,32 +1162,39 @@ footer p {
     flex: 1;
     padding: 10px 14px;
     background: #262626;
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     color: var(--text);
+    font-family: var(--tag-font);
     font-size: 1rem;
     text-align: center;
     letter-spacing: 2px;
     outline: none;
 }
 
+.room-input:focus {
+    border-color: var(--accent-blue);
+}
+
 .room-code-display {
     background: #262626;
-    border: 1px dashed var(--accent-yellow);
+    border: 3px dashed var(--accent-yellow);
     border-radius: var(--radius);
     padding: 16px;
     margin: 16px 0;
+    font-family: var(--tag-font);
     font-size: 1.6rem;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 4px;
     color: var(--accent-yellow);
+    text-shadow: 2px 2px 0 var(--border);
 }
 
 .status-indicator {
     display: inline-block;
     padding: 6px 14px;
     background: #262626;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 4px;
     font-size: 0.85rem;
     color: var(--text-secondary);
@@ -1084,13 +1211,14 @@ footer p {
 
 .player-panel {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 3px solid var(--border);
     border-radius: var(--radius);
     padding: 12px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
+    box-shadow: var(--pop-sm);
 }
 
 .player-panel.you {
@@ -1112,8 +1240,9 @@ footer p {
 .player-label.opp-label { color: var(--accent-pink); }
 
 .player-score {
+    font-family: var(--tag-font);
     font-size: 1.4rem;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--text);
 }
 
