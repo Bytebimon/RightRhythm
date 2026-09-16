@@ -353,10 +353,28 @@ function gameLoop(timestamp) {
 }
 
 // ── INPUT HANDLING ──
+// Keys that either lane layout could use (DFJK or arrow keys). Space/PageUp/
+// PageDown/Home/End are also blocked while a track is active since browsers
+// scroll on those too, and none of them are needed to play.
+const SCROLL_KEYS = new Set([
+    "arrowup", "arrowdown", "arrowleft", "arrowright",
+    "d", "f", "j", "k", " ", "spacebar", "pageup", "pagedown", "home", "end"
+]);
+
 window.addEventListener("keydown", (e) => {
+    const keyHit = e.key.toLowerCase();
+
+    // Stop the browser from scrolling the page on arrow keys / space while a
+    // track is in progress, but never hijack keys while the player is
+    // typing into an input, select, or textarea (e.g. the keybind picker).
+    const target = e.target;
+    const isFormField = target && /^(input|select|textarea)$/i.test(target.tagName);
+    if (isPlaying && !isFormField && SCROLL_KEYS.has(keyHit)) {
+        e.preventDefault();
+    }
+
     if (!isPlaying) return;
 
-    const keyHit = e.key.toLowerCase();
     const laneIndex = activeLanes.findIndex(l => l.key.toLowerCase() === keyHit);
 
     if (laneIndex === -1) return;

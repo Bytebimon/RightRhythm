@@ -8,7 +8,7 @@
     <meta name="description" content="Play Rhythm Rush — hit falling notes in sync with the beat.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 </head>
@@ -118,6 +118,8 @@
 
         </section>
 
+    </div>
+
     <!-- Results Overlay -->
     <div class="results-overlay" id="resultsOverlay">
         <div class="results-card">
@@ -156,46 +158,19 @@
         </div>
     </div>
 
+    <!-- Local Leaderboard -->
     <div class="container">
-
-        <div class="hero">
-            <span class="hero-badge">RHYTHM ARCADE</span>
-            <h1>RHYTHM RUSH</h1>
-            <p>Hit the notes in sync with the beat. Master tracks, build combos, and get the highest score.</p>
-
-            <div class="cta-group">
-                <a href="Select.html" class="btn-primary" id="ctaPlay">
-                    Choose Track
-                </a>
-
-                <a href="Dashboard.html" class="btn-secondary" id="ctaDashboard">
-                    Dashboard
-                </a>
-
-                <a href="Game.html?song=demo_song.json" class="btn-secondary" id="ctaQuick">
-                    Quick Start
-                </a>
-            </div>
-        </div>
-
         <div class="grid-section">
-
-
             <div class="info-card" id="leaderboardCard">
-                <h4>Leaderboard</h4>
+                <h3>Leaderboard</h3>
                 <ol id="leaderboardList" class="leaderboard-list"></ol>
             </div>
+        </div>
+    </div>
 
-
-
-            <script src="DataBase.js"></script>
-            <script src="chart-utils.js"></script>
-            <script src="OnlineSketch.js"></script>
-            <script>
-                window.addEventListener('DOMContentLoaded', () => {
-                    renderLeaderboard();
-                });
-            </script>
+    <script src="DataBase.js"></script>
+    <script src="chart-utils.js"></script>
+    <script src="OnlineSketch.js"></script>
 </body>
 
 </html>

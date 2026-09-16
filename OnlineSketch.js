@@ -525,10 +525,22 @@ function gameLoop(timestamp) {
 }
 
 // ── INPUT HANDLING ──
+const SCROLL_KEYS = new Set([
+    "arrowup", "arrowdown", "arrowleft", "arrowright",
+    "d", "f", "j", "k", " ", "spacebar", "pageup", "pagedown", "home", "end"
+]);
+
 window.addEventListener("keydown", (e) => {
+    const keyHit = e.key.toLowerCase();
+
+    const target = e.target;
+    const isFormField = target && /^(input|select|textarea)$/i.test(target.tagName);
+    if (isPlaying && !isFormField && SCROLL_KEYS.has(keyHit)) {
+        e.preventDefault();
+    }
+
     if (!isPlaying) return;
 
-    const keyHit = e.key.toLowerCase();
     const laneIndex = LANES.findIndex(l => l.key === keyHit);
 
     if (laneIndex === -1) return;

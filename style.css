@@ -32,6 +32,10 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background-color: var(--bg);
     background-image:
@@ -44,10 +48,22 @@ body {
     color: var(--text);
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 24px 16px;
+    overflow-x: hidden;
+}
+
+/* Game pages (Game.html / OnlineGame.html) size to the viewport instead of
+   growing taller than it, so the page never needs to scroll during play. */
+body.game-page {
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    padding: 14px 16px;
+    justify-content: flex-start;
 }
 
 a {
@@ -666,17 +682,48 @@ a:hover {
 .game-wrapper {
     width: 100%;
     max-width: 500px;
+    height: 100%;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
 }
 
 #gamePlayContainer {
     width: 100%;
+    min-height: 0;
+    flex: 1;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+}
+
+.keybind-picker {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: var(--bg-card);
+    border: 3px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--pop-sm);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.keybind-picker select {
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: #262626;
+    color: var(--text);
+    border: 3px solid var(--border);
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
 }
 
 .online-panel {
@@ -964,16 +1011,30 @@ a:hover {
 /* Canvas */
 .canvas-wrapper {
     position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* The canvas keeps its internal 500x600 drawing resolution (set via the
+   width/height attributes in HTML) but is scaled to fit whatever space is
+   available — shrinking on small or short screens instead of overflowing
+   and forcing the page to scroll. */
 canvas#gameCanvas {
     background: #181818;
     border-radius: var(--radius);
     border: 3px solid var(--border);
     box-shadow: var(--pop);
     display: block;
-    width: 500px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 100%;
+    aspect-ratio: 5 / 6;
+    object-fit: contain;
 }
 
 /* Controls Action */
@@ -1033,7 +1094,11 @@ canvas#gameCanvas {
     border-radius: var(--radius);
     padding: 32px;
     text-align: center;
-    min-width: 320px;
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+    max-height: 90dvh;
+    overflow-y: auto;
     box-shadow: var(--pop);
     transform: rotate(-0.6deg);
 }
@@ -1253,6 +1318,7 @@ footer p {
 
 @media (max-width: 600px) {
     body { padding: 12px 8px; }
+    body.game-page { padding: 8px 8px; gap: 8px; }
     .hero h1 { font-size: 2.2rem; }
     .cta-group { flex-direction: column; }
     .grid-section { grid-template-columns: 1fr; }
@@ -1261,4 +1327,15 @@ footer p {
     .online-scoreboard { grid-template-columns: 1fr; }
     .account-form { grid-template-columns: 1fr; }
     .song-maker-fields { grid-template-columns: 1fr 1fr; }
+    .game-header { grid-template-columns: 1fr; text-align: center; gap: 4px; padding: 8px 10px; }
+    .nav-group { justify-content: center; }
+    .score-item .value { font-size: 1.05rem; }
+    .results-card { padding: 20px; }
+    .result-grade { font-size: 2.6rem; margin-bottom: 12px; }
+}
+
+@media (max-height: 700px) {
+    body.game-page { padding: 6px 8px; gap: 6px; }
+    .game-wrapper { gap: 6px; }
+    .game-header, .score-board, .keybind-picker { padding-top: 6px; padding-bottom: 6px; }
 }
