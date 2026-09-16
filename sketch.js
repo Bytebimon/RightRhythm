@@ -11,7 +11,7 @@ const LANES = [
 
 const TARGET_Y = 530;
 const NOTE_SPEED = 0.4;
-const HIT_WINDOW = 200;
+const HIT_WINDOW = 250;
 
 // ── GAME STATE ──
 let notes = [];
