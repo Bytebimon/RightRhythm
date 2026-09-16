@@ -9,6 +9,13 @@ const LANES = [
     { key: "k", x: 400, color: "#f59e0b", label: "K" }
 ];
 
+const LANES2 = [
+   { key: "ArrowLeft", x: 100, color: "#ec4899", label: "←" }, 
+   { key: "ArrowDown", x: 200, color: "#3b82f6", label: "↓" }, 
+   { key: "ArrowUp", x: 300, color: "#10b981", label: "↑" }, 
+   { key: "ArrowRight", x: 400, color: "#f59e0b", label: "→" }
+];
+
 const TARGET_Y = 530;
 const NOTE_SPEED = 0.4;
 const HIT_WINDOW = 250;
