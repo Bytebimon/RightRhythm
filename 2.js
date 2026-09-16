@@ -20,9 +20,6 @@ const TARGET_Y = 530;
 const NOTE_SPEED = 0.4;
 const HIT_WINDOW = 250;
 
-// ── KEYBIND STATE ──
-let activeLanes = LANES; // default: DFJK
-
 // ── GAME STATE ──
 let notes = [];
 let originalNotes = [];
@@ -47,21 +44,6 @@ let audioPlaybackBlocked = false;
 // ── VISUAL TIMERS ──
 let laneFlashes = [0, 0, 0, 0];
 
-// ── KEYBIND SWITCHING ──
-function setKeybinds(mode) {
-    if (isPlaying) return; // don't allow switching mid-track
-    activeLanes = (mode === "Lane2") ? LANES2 : LANES;
-    localStorage.setItem('rhythmrush_keybinds', mode);
-    drawLanes(); // redraw immediately so labels update
-}
-
-function loadSavedKeybinds() {
-    const saved = localStorage.getItem('rhythmrush_keybinds') || 'Lanes';
-    activeLanes = (saved === 'Lane2') ? LANES2 : LANES;
-    const select = document.getElementById('choices');
-    if (select) select.value = saved;
-}
-
 // ── DRAWING ──
 function drawLanes() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -72,7 +54,7 @@ function drawLanes() {
 
     const now = performance.now();
 
-    activeLanes.forEach((lane, i) => {
+    LANES.forEach((lane, i) => {
         // Lane separator line
         ctx.strokeStyle = "#272727";
         ctx.lineWidth = 1;
@@ -81,7 +63,7 @@ function drawLanes() {
         ctx.lineTo(lane.x - 45, canvas.height);
         ctx.stroke();
 
-        if (i === activeLanes.length - 1) {
+        if (i === LANES.length - 1) {
             ctx.beginPath();
             ctx.moveTo(lane.x + 45, 0);
             ctx.lineTo(lane.x + 45, canvas.height);
@@ -120,7 +102,7 @@ function drawLanes() {
 }
 
 function drawNote(lane, noteY) {
-    const laneData = activeLanes[lane];
+    const laneData = LANES[lane];
 
     // Solid flat note (NO shadow blur / glow)
     ctx.fillStyle = laneData.color;
@@ -136,7 +118,6 @@ function drawNote(lane, noteY) {
 
 // ── INITIALIZE ──
 async function initGame() {
-    loadSavedKeybinds();
     drawLanes();
     updateRating("READY", "#3b82f6");
 
@@ -357,7 +338,7 @@ window.addEventListener("keydown", (e) => {
     if (!isPlaying) return;
 
     const keyHit = e.key.toLowerCase();
-    const laneIndex = activeLanes.findIndex(l => l.key.toLowerCase() === keyHit);
+    const laneIndex = LANES.findIndex(l => l.key === keyHit);
 
     if (laneIndex === -1) return;
 

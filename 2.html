@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhythm Rush - Game</title>
     <meta name="description" content="Play Rhythm Rush — hit falling notes in sync with the beat.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,14 +29,19 @@
                 Best: <span id="highScoreText">0</span>
             </div>
         </div>
+        <label for="choices">KeyBinds:</label>
+ <select id="choices">
+    <option value="Lanes">DFJK keys</option>
+    <option value="Lane2">Arrow keys</option>
+  </select>
 
-        <div class="keybind-picker">
-            <label for="choices">KeyBinds:</label>
-            <select id="choices" onchange="setKeybinds(this.value)">
-                <option value="Lanes">DFJK keys</option>
-                <option value="Lane2">Arrow keys</option>
-            </select>
-        </div>
+  <button onclick="makeChoice()">Submit</button>
+
+  <script>
+    function makeChoice() {
+      
+    }
+  </script>
 
         <!-- Score / Combo / Rating Dashboard -->
         <div class="score-board">
